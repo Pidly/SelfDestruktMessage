@@ -28,7 +28,7 @@ public class LoginActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
         setContentView(R.layout.activity_login);
 
         mSignUpTextView = (TextView)findViewById(R.id.signUpText);
@@ -63,11 +63,9 @@ public class LoginActivity extends ActionBarActivity {
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 }else{
-                    setProgressBarIndeterminateVisibility(true);
                     ParseUser.logInInBackground(userName, passWord, new LogInCallback() {
                         @Override
                         public void done(ParseUser parseUser, ParseException e) {
-                            setProgressBarIndeterminateVisibility(false);
                             if(e == null){
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
