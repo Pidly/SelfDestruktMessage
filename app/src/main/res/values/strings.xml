@@ -21,4 +21,9 @@
     <string name="login_error_message">Please make sure you enter a username, password</string>
     <string name="login_error_title">BEEP BOOP BEEP!</string>
     <string name="menu_logout_lable">Logout</string>
+    <string name="empty_inbox_label">No new messages</string>
+    <string name="empty_friends_label">Add friends to begin</string>
+    <string name="menu_edit_friends_label">Edit Friends</string>
+    <string name="title_activity_edit_friends">Edit Friends</string>
+    <string name="error_title">BEEEEEEP</string>
 </resources>
