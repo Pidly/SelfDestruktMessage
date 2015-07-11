@@ -1,14 +1,15 @@
 package com.pidly.ribbit;
 
-
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ListActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -18,8 +19,10 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
-public class FriendsFragment extends ListFragment {
-    public static final String TAG = FriendsFragment.class.getSimpleName();
+
+public class RecipientsActivity extends ListActivity {
+
+    public static final String TAG = RecipientsActivity.class.getSimpleName();
 
     protected ParseRelation<ParseUser> mFriendsRelation;
     protected List<ParseUser> mFriends;
@@ -27,11 +30,13 @@ public class FriendsFragment extends ListFragment {
     protected ParseUser mCurrentUser;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_recipients);
 
-        View rootView = inflater.inflate(R.layout.fragment_friends, container, false);
+        //setupActionBar();
 
-        return rootView;
+        getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
     }
 
     @Override
@@ -58,11 +63,11 @@ public class FriendsFragment extends ListFragment {
                         i++;
                     }
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), android.R.layout.simple_list_item_checked, userNames);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), android.R.layout.simple_list_item_1, userNames);
                     setListAdapter(adapter);
                 }else{
                     Log.e(TAG, e.getMessage());
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getListView().getContext());
+                    AlertDialog.Builder builder = new AlertDialog.Builder(RecipientsActivity.this);
                     builder.setMessage(e.getMessage())
                             .setTitle(R.string.error_title)
                             .setPositiveButton(android.R.string.ok, null);
@@ -72,5 +77,32 @@ public class FriendsFragment extends ListFragment {
                 }
             }
         });
+    }
+
+    private void setupActionBar(){
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_recipients, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
